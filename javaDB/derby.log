@@ -1,24 +1,7 @@
-Tue Jan 03 15:17:59 PST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Wed Jan 04 15:22:01 PST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Tue Jan 03 15:18:05 PST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-767e-691c-000017f9e8f5 
-on database directory /Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB/SuppliesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
-Loaded from file:/Users/amyrfrancisco/JavaDB/db-derby-10.14.2.0-bin/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=17.0.5+9-LTS-191
-user.dir=/Users/amyrfrancisco/JavaDB/db-derby-10.14.2.0-bin
-os.name=Mac OS X
-os.arch=x86_64
-os.version=12.6.2
-derby.system.home=/Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Tue Jan 03 15:18:08 PST 2023:
-Shutting down instance a816c00e-0185-767e-691c-000017f9e8f5 on database directory /Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB/SuppliesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
-Tue Jan 03 15:18:08 PST 2023 Thread[DRDAConnThread_3,5,main] (DATABASE = SuppliesDB), (DRDAID = {2}), Database 'SuppliesDB' shutdown.
-----------------------------------------------------------------
-Tue Jan 03 15:20:26 PST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 6ede40af-0185-767e-691c-000017f9e8f5 
+Wed Jan 04 15:22:06 PST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-7ba8-74d4-000017f9e8f5 
 on database directory /Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB/SuppliesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
 Loaded from file:/Users/amyrfrancisco/JavaDB/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation

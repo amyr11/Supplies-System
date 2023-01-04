@@ -1,0 +1,31 @@
+-- CREATE TABLE Suppliers (
+--     supplier_id INT NOT NULL,
+--     supplier_name VARCHAR(50) NOT NULL,
+--     contact_information VARCHAR(50) NOT NULL,
+--     product_lines VARCHAR(50) NOT NULL,
+--     active VARCHAR(1) NOT NULL DEFAULT 'y',
+--     CONSTRAINT supplier_id_pk PRIMARY KEY(supplier_id)
+-- );
+-- 
+-- CREATE TABLE Products (
+--     product_id INT NOT NULL,
+--     product_name VARCHAR(50) NOT NULL,
+--     product_description VARCHAR(50) NOT NULL,
+--     category VARCHAR(50) NOT NULL,
+--     active VARCHAR(1) NOT NULL DEFAULT 'y',
+--     CONSTRAINT product_id_pk PRIMARY KEY(product_id)
+-- );
+-- 
+-- CREATE TABLE Transactions (
+--     transaction_id INT NOT NULL,
+--     supplier_id INT,
+--     product_id INT NOT NULL,
+--     quantity INT NOT NULL,
+--     cost DECIMAL(10, 2) NOT NULL,
+--     date DATE NOT NULL,
+--     transaction_type VARCHAR(10),
+--     status VARCHAR(10),
+--     CONSTRAINT transaction_id_pk PRIMARY KEY(transaction_id),
+--     CONSTRAINT supplier_id_fk FOREIGN KEY(supplier_id) REFERENCES Suppliers(supplier_id),
+--     CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES Products(product_id)
+-- );
