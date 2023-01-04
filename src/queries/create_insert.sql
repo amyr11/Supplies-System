@@ -23,7 +23,7 @@ CREATE TABLE Transactions (
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     cost DECIMAL(10, 2) NOT NULL,
-    date DATE NOT NULL,
+    transaction_date DATE NOT NULL,
     transaction_type VARCHAR(10),
     status VARCHAR(10),
     CONSTRAINT transaction_id_pk PRIMARY KEY(transaction_id),
@@ -74,7 +74,7 @@ INSERT INTO Transactions (
                 product_id, 
                 quantity, 
                 cost, 
-                date, 
+                transaction_date, 
                 transaction_type, 
                 status
             )
