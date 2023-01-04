@@ -26,27 +26,89 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabDashboard = new javax.swing.JPanel();
+        tabTransactions = new javax.swing.JPanel();
+        tabProducts = new javax.swing.JPanel();
+        tabSuppliers = new javax.swing.JPanel();
+        tabSettings = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("main");
+        javax.swing.GroupLayout tabDashboardLayout = new javax.swing.GroupLayout(tabDashboard);
+        tabDashboard.setLayout(tabDashboardLayout);
+        tabDashboardLayout.setHorizontalGroup(
+            tabDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        tabDashboardLayout.setVerticalGroup(
+            tabDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 414, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Dashboard", tabDashboard);
+
+        javax.swing.GroupLayout tabTransactionsLayout = new javax.swing.GroupLayout(tabTransactions);
+        tabTransactions.setLayout(tabTransactionsLayout);
+        tabTransactionsLayout.setHorizontalGroup(
+            tabTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        tabTransactionsLayout.setVerticalGroup(
+            tabTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 414, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Transactions", tabTransactions);
+
+        javax.swing.GroupLayout tabProductsLayout = new javax.swing.GroupLayout(tabProducts);
+        tabProducts.setLayout(tabProductsLayout);
+        tabProductsLayout.setHorizontalGroup(
+            tabProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        tabProductsLayout.setVerticalGroup(
+            tabProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 414, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Products", tabProducts);
+
+        javax.swing.GroupLayout tabSuppliersLayout = new javax.swing.GroupLayout(tabSuppliers);
+        tabSuppliers.setLayout(tabSuppliersLayout);
+        tabSuppliersLayout.setHorizontalGroup(
+            tabSuppliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        tabSuppliersLayout.setVerticalGroup(
+            tabSuppliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 414, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Suppliers", tabSuppliers);
+
+        javax.swing.GroupLayout tabSettingsLayout = new javax.swing.GroupLayout(tabSettings);
+        tabSettings.setLayout(tabSettingsLayout);
+        tabSettingsLayout.setHorizontalGroup(
+            tabSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 850, Short.MAX_VALUE)
+        );
+        tabSettingsLayout.setVerticalGroup(
+            tabSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 414, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Settings", tabSettings);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(jLabel1)
-                .addContainerGap(195, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(jLabel1)
-                .addContainerGap(153, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -89,6 +151,11 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel tabDashboard;
+    private javax.swing.JPanel tabProducts;
+    private javax.swing.JPanel tabSettings;
+    private javax.swing.JPanel tabSuppliers;
+    private javax.swing.JPanel tabTransactions;
     // End of variables declaration//GEN-END:variables
 }
