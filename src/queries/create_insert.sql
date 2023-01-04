@@ -1,10 +1,16 @@
+CREATE TABLE Product_Categories (
+    category_name VARCHAR(50) NOT NULL,
+    CONSTRAINT category_name_pk PRIMARY KEY(category_name)
+);
+
 CREATE TABLE Suppliers (
     supplier_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     product_lines VARCHAR(50) NOT NULL,
     active VARCHAR(1) NOT NULL DEFAULT 'y',
-    CONSTRAINT supplier_name_pk PRIMARY KEY(supplier_name)
+    CONSTRAINT supplier_name_pk PRIMARY KEY(supplier_name),
+    CONSTRAINT product_lines_fk FOREIGN KEY(product_lines) REFERENCES Product_Categories(category_name)
 );
 
 CREATE TABLE Products (
@@ -12,7 +18,8 @@ CREATE TABLE Products (
     product_description VARCHAR(50) NOT NULL,
     category VARCHAR(50) NOT NULL,
     active VARCHAR(1) NOT NULL DEFAULT 'y',
-    CONSTRAINT product_name_pk PRIMARY KEY(product_name)
+    CONSTRAINT product_name_pk PRIMARY KEY(product_name),
+    CONSTRAINT category_fk FOREIGN KEY(category) REFERENCES Product_Categories(category_name)
 );
 
 CREATE TABLE Transactions (
@@ -39,6 +46,20 @@ CREATE TABLE Admin_user (
 
 INSERT INTO Admin_user
 VALUES ('admin', 'admin');
+
+INSERT INTO Product_Categories (
+                category_name
+            )
+VALUES ('Electronics'),
+       ('Furniture'),
+       ('Clothing'),
+       ('Outdoor gear'),
+       ('Toys'),
+       ('Sports equipment'),
+       ('Beauty products'),
+       ('Automotive parts'),
+       ('Home appliances'),
+       ('Office supplies');
 
 INSERT INTO Suppliers (
                 supplier_name, 
