@@ -29,6 +29,24 @@ public class MainScreen extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         tabDashboard = new javax.swing.JPanel();
         tabTransactions = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
+        lblSupplier = new javax.swing.JLabel();
+        cmbSupplier = new javax.swing.JComboBox<>();
+        lblProduct = new javax.swing.JLabel();
+        cmbProduct = new javax.swing.JComboBox<>();
+        lblQuantity = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
+        lblCost = new javax.swing.JLabel();
+        txtCost = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
+        lblDate = new javax.swing.JLabel();
+        lblTransactionType = new javax.swing.JLabel();
+        cmbTransactionType = new javax.swing.JComboBox<>();
+        lblStatus = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTransactions = new javax.swing.JTable();
         tabProducts = new javax.swing.JPanel();
         tabSuppliers = new javax.swing.JPanel();
         tabSettings = new javax.swing.JPanel();
@@ -39,7 +57,7 @@ public class MainScreen extends javax.swing.JFrame {
         tabDashboard.setLayout(tabDashboardLayout);
         tabDashboardLayout.setHorizontalGroup(
             tabDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGap(0, 806, Short.MAX_VALUE)
         );
         tabDashboardLayout.setVerticalGroup(
             tabDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -48,15 +66,152 @@ public class MainScreen extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Dashboard", tabDashboard);
 
+        jSplitPane1.setDividerLocation(400);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 280));
+
+        lblSupplier.setText("Supplier");
+        lblSupplier.setMinimumSize(null);
+
+        cmbSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSupplier.setMinimumSize(null);
+
+        lblProduct.setText("Product");
+        lblProduct.setMinimumSize(null);
+
+        cmbProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProduct.setMinimumSize(null);
+
+        lblQuantity.setText("Quantity");
+        lblQuantity.setMinimumSize(null);
+
+        txtQuantity.setMinimumSize(null);
+
+        lblCost.setText("Cost (₱)");
+        lblCost.setMinimumSize(null);
+
+        txtCost.setMinimumSize(null);
+
+        txtDate.setMinimumSize(null);
+
+        lblDate.setText("Date (YYYY-MM-DD)");
+        lblDate.setMinimumSize(null);
+
+        lblTransactionType.setText("Transaction type");
+        lblTransactionType.setMinimumSize(null);
+
+        cmbTransactionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTransactionType.setMinimumSize(null);
+
+        lblStatus.setText("Status");
+        lblStatus.setMinimumSize(null);
+
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbStatus.setMinimumSize(null);
+        cmbStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStatusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblSupplier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbSupplier, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblProduct, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbProduct, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDate, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbStatus, 0, 177, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cmbTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTransactionType, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblTransactionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbTransactionType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(140, Short.MAX_VALUE))
+        );
+
+        jSplitPane1.setLeftComponent(jPanel1);
+
+        tblTransactions.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblTransactions.setSize(new java.awt.Dimension(250, 80));
+        jScrollPane1.setViewportView(tblTransactions);
+
+        jSplitPane1.setRightComponent(jScrollPane1);
+
         javax.swing.GroupLayout tabTransactionsLayout = new javax.swing.GroupLayout(tabTransactions);
         tabTransactions.setLayout(tabTransactionsLayout);
         tabTransactionsLayout.setHorizontalGroup(
             tabTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
         );
         tabTransactionsLayout.setVerticalGroup(
             tabTransactionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 414, Short.MAX_VALUE)
+            .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Transactions", tabTransactions);
@@ -65,7 +220,7 @@ public class MainScreen extends javax.swing.JFrame {
         tabProducts.setLayout(tabProductsLayout);
         tabProductsLayout.setHorizontalGroup(
             tabProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGap(0, 806, Short.MAX_VALUE)
         );
         tabProductsLayout.setVerticalGroup(
             tabProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,7 +233,7 @@ public class MainScreen extends javax.swing.JFrame {
         tabSuppliers.setLayout(tabSuppliersLayout);
         tabSuppliersLayout.setHorizontalGroup(
             tabSuppliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGap(0, 806, Short.MAX_VALUE)
         );
         tabSuppliersLayout.setVerticalGroup(
             tabSuppliersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,7 +246,7 @@ public class MainScreen extends javax.swing.JFrame {
         tabSettings.setLayout(tabSettingsLayout);
         tabSettingsLayout.setHorizontalGroup(
             tabSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
+            .addGap(0, 806, Short.MAX_VALUE)
         );
         tabSettingsLayout.setVerticalGroup(
             tabSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,6 +268,10 @@ public class MainScreen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,11 +310,29 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbProduct;
+    private javax.swing.JComboBox<String> cmbStatus;
+    private javax.swing.JComboBox<String> cmbSupplier;
+    private javax.swing.JComboBox<String> cmbTransactionType;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblCost;
+    private javax.swing.JLabel lblDate;
+    private javax.swing.JLabel lblProduct;
+    private javax.swing.JLabel lblQuantity;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblSupplier;
+    private javax.swing.JLabel lblTransactionType;
     private javax.swing.JPanel tabDashboard;
     private javax.swing.JPanel tabProducts;
     private javax.swing.JPanel tabSettings;
     private javax.swing.JPanel tabSuppliers;
     private javax.swing.JPanel tabTransactions;
+    private javax.swing.JTable tblTransactions;
+    private javax.swing.JTextField txtCost;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtQuantity;
     // End of variables declaration//GEN-END:variables
 }
