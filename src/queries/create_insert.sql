@@ -37,6 +37,15 @@ CREATE TABLE Transactions (
     CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES Products(product_id)
 );
 
+CREATE TABLE Admin_user (
+    username VARCHAR(50),
+    password VARCHAR(50)
+);
+
+
+INSERT INTO Admin_user
+VALUES ('admin', 'admin');
+
 INSERT INTO Suppliers (
                 supplier_name, 
                 email,
