@@ -1,7 +1,7 @@
-Wed Jan 04 17:49:25 PST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+Thu Jan 05 13:38:04 PST 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Wed Jan 04 17:49:31 PST 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-7c2f-69f2-000017f9e8f5 
+Thu Jan 05 13:38:09 PST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-806f-a414-000017f9e8f5 
 on database directory /Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB/SuppliesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
 Loaded from file:/Users/amyrfrancisco/JavaDB/db-derby-10.14.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,3 +12,7 @@ os.arch=x86_64
 os.version=12.6.2
 derby.system.home=/Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Thu Jan 05 13:39:17 PST 2023:
+Shutting down instance a816c00e-0185-806f-a414-000017f9e8f5 on database directory /Users/amyrfrancisco/Library/CloudStorage/OneDrive-PamantasanngLungsodngMaynila/College/BSCS 2nd Year/1st sem/Object Oriented Programming/Finals/Final Project/FinalProject_Group1/javaDB/SuppliesDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
+Thu Jan 05 13:39:17 PST 2023 Thread[DRDAConnThread_3,5,main] (DATABASE = SuppliesDB), (DRDAID = {2}), Database 'SuppliesDB' shutdown.
