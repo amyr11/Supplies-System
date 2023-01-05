@@ -4,6 +4,9 @@
  */
 package screens;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
 /**
  *
  * @author amyrfrancisco
@@ -26,7 +29,23 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        dlgAddTransaction = new javax.swing.JDialog();
+        jLabel10 = new javax.swing.JLabel();
+        dlgEditTransaction = new javax.swing.JDialog();
+        jLabel11 = new javax.swing.JLabel();
+        dlgAddProduct = new javax.swing.JDialog();
+        jLabel12 = new javax.swing.JLabel();
+        dlgEditProduct = new javax.swing.JDialog();
+        jLabel19 = new javax.swing.JLabel();
+        dlgAddSupplier = new javax.swing.JDialog();
+        jLabel20 = new javax.swing.JLabel();
+        dlgEditSupplier = new javax.swing.JDialog();
+        jLabel21 = new javax.swing.JLabel();
+        dlgAddCategory = new javax.swing.JDialog();
+        jLabel22 = new javax.swing.JLabel();
+        dlgEditCategory = new javax.swing.JDialog();
+        jLabel23 = new javax.swing.JLabel();
+        wndMain = new javax.swing.JTabbedPane();
         tabDashboard = new javax.swing.JPanel();
         tabTransactions = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -78,10 +97,234 @@ public class MainScreen extends javax.swing.JFrame {
         tblCategories = new javax.swing.JTable();
         btnAddCategory = new javax.swing.JButton();
 
+        dlgAddTransaction.setTitle("Add Transaction");
+        dlgAddTransaction.setAlwaysOnTop(true);
+        dlgAddTransaction.setLocation(new java.awt.Point(50, 50));
+        dlgAddTransaction.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgAddTransaction.setModal(true);
+        dlgAddTransaction.setName(""); // NOI18N
+        dlgAddTransaction.setResizable(false);
+        dlgAddTransaction.setLocationRelativeTo(null);
+
+        jLabel10.setText("add transaction");
+
+        javax.swing.GroupLayout dlgAddTransactionLayout = new javax.swing.GroupLayout(dlgAddTransaction.getContentPane());
+        dlgAddTransaction.getContentPane().setLayout(dlgAddTransactionLayout);
+        dlgAddTransactionLayout.setHorizontalGroup(
+            dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddTransactionLayout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(jLabel10)
+                .addContainerGap(168, Short.MAX_VALUE))
+        );
+        dlgAddTransactionLayout.setVerticalGroup(
+            dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddTransactionLayout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addComponent(jLabel10)
+                .addContainerGap(254, Short.MAX_VALUE))
+        );
+
+        dlgEditTransaction.setTitle("Add Transaction");
+        dlgEditTransaction.setAlwaysOnTop(true);
+        dlgEditTransaction.setLocation(new java.awt.Point(50, 50));
+        dlgEditTransaction.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgEditTransaction.setModal(true);
+        dlgEditTransaction.setName(""); // NOI18N
+        dlgEditTransaction.setResizable(false);
+        dlgEditTransaction.setLocationRelativeTo(null);
+
+        jLabel11.setText("edit transaction");
+
+        javax.swing.GroupLayout dlgEditTransactionLayout = new javax.swing.GroupLayout(dlgEditTransaction.getContentPane());
+        dlgEditTransaction.getContentPane().setLayout(dlgEditTransactionLayout);
+        dlgEditTransactionLayout.setHorizontalGroup(
+            dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditTransactionLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel11)
+                .addContainerGap(189, Short.MAX_VALUE))
+        );
+        dlgEditTransactionLayout.setVerticalGroup(
+            dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditTransactionLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel11)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgAddProduct.setTitle("Add Transaction");
+        dlgAddProduct.setAlwaysOnTop(true);
+        dlgAddProduct.setLocation(new java.awt.Point(50, 50));
+        dlgAddProduct.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgAddProduct.setModal(true);
+        dlgAddProduct.setName(""); // NOI18N
+        dlgAddProduct.setResizable(false);
+        dlgAddProduct.setLocationRelativeTo(null);
+
+        jLabel12.setText("add product");
+
+        javax.swing.GroupLayout dlgAddProductLayout = new javax.swing.GroupLayout(dlgAddProduct.getContentPane());
+        dlgAddProduct.getContentPane().setLayout(dlgAddProductLayout);
+        dlgAddProductLayout.setHorizontalGroup(
+            dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddProductLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel12)
+                .addContainerGap(207, Short.MAX_VALUE))
+        );
+        dlgAddProductLayout.setVerticalGroup(
+            dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddProductLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel12)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgEditProduct.setTitle("Add Transaction");
+        dlgEditProduct.setAlwaysOnTop(true);
+        dlgEditProduct.setLocation(new java.awt.Point(50, 50));
+        dlgEditProduct.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgEditProduct.setModal(true);
+        dlgEditProduct.setName(""); // NOI18N
+        dlgEditProduct.setResizable(false);
+        dlgEditProduct.setLocationRelativeTo(null);
+
+        jLabel19.setText("edit product");
+
+        javax.swing.GroupLayout dlgEditProductLayout = new javax.swing.GroupLayout(dlgEditProduct.getContentPane());
+        dlgEditProduct.getContentPane().setLayout(dlgEditProductLayout);
+        dlgEditProductLayout.setHorizontalGroup(
+            dlgEditProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditProductLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel19)
+                .addContainerGap(208, Short.MAX_VALUE))
+        );
+        dlgEditProductLayout.setVerticalGroup(
+            dlgEditProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditProductLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel19)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgAddSupplier.setTitle("Add Transaction");
+        dlgAddSupplier.setAlwaysOnTop(true);
+        dlgAddSupplier.setLocation(new java.awt.Point(50, 50));
+        dlgAddSupplier.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgAddSupplier.setModal(true);
+        dlgAddSupplier.setName(""); // NOI18N
+        dlgAddSupplier.setResizable(false);
+        dlgAddSupplier.setLocationRelativeTo(null);
+
+        jLabel20.setText("add supplier");
+
+        javax.swing.GroupLayout dlgAddSupplierLayout = new javax.swing.GroupLayout(dlgAddSupplier.getContentPane());
+        dlgAddSupplier.getContentPane().setLayout(dlgAddSupplierLayout);
+        dlgAddSupplierLayout.setHorizontalGroup(
+            dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddSupplierLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel20)
+                .addContainerGap(205, Short.MAX_VALUE))
+        );
+        dlgAddSupplierLayout.setVerticalGroup(
+            dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddSupplierLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel20)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgEditSupplier.setTitle("Add Transaction");
+        dlgEditSupplier.setAlwaysOnTop(true);
+        dlgEditSupplier.setLocation(new java.awt.Point(50, 50));
+        dlgEditSupplier.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgEditSupplier.setModal(true);
+        dlgEditSupplier.setName(""); // NOI18N
+        dlgEditSupplier.setResizable(false);
+        dlgEditSupplier.setLocationRelativeTo(null);
+
+        jLabel21.setText("edit supplier");
+
+        javax.swing.GroupLayout dlgEditSupplierLayout = new javax.swing.GroupLayout(dlgEditSupplier.getContentPane());
+        dlgEditSupplier.getContentPane().setLayout(dlgEditSupplierLayout);
+        dlgEditSupplierLayout.setHorizontalGroup(
+            dlgEditSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditSupplierLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel21)
+                .addContainerGap(206, Short.MAX_VALUE))
+        );
+        dlgEditSupplierLayout.setVerticalGroup(
+            dlgEditSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditSupplierLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel21)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgAddCategory.setTitle("Add Transaction");
+        dlgAddCategory.setAlwaysOnTop(true);
+        dlgAddCategory.setLocation(new java.awt.Point(50, 50));
+        dlgAddCategory.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgAddCategory.setModal(true);
+        dlgAddCategory.setName(""); // NOI18N
+        dlgAddCategory.setResizable(false);
+        dlgAddCategory.setLocationRelativeTo(null);
+
+        jLabel22.setText("add category");
+
+        javax.swing.GroupLayout dlgAddCategoryLayout = new javax.swing.GroupLayout(dlgAddCategory.getContentPane());
+        dlgAddCategory.getContentPane().setLayout(dlgAddCategoryLayout);
+        dlgAddCategoryLayout.setHorizontalGroup(
+            dlgAddCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddCategoryLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel22)
+                .addContainerGap(202, Short.MAX_VALUE))
+        );
+        dlgAddCategoryLayout.setVerticalGroup(
+            dlgAddCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAddCategoryLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel22)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        dlgEditCategory.setTitle("Add Transaction");
+        dlgEditCategory.setAlwaysOnTop(true);
+        dlgEditCategory.setLocation(new java.awt.Point(50, 50));
+        dlgEditCategory.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgEditCategory.setModal(true);
+        dlgEditCategory.setName(""); // NOI18N
+        dlgEditCategory.setResizable(false);
+        dlgEditCategory.setLocationRelativeTo(null);
+
+        jLabel23.setText("edit category");
+
+        javax.swing.GroupLayout dlgEditCategoryLayout = new javax.swing.GroupLayout(dlgEditCategory.getContentPane());
+        dlgEditCategory.getContentPane().setLayout(dlgEditCategoryLayout);
+        dlgEditCategoryLayout.setHorizontalGroup(
+            dlgEditCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditCategoryLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLabel23)
+                .addContainerGap(203, Short.MAX_VALUE))
+        );
+        dlgEditCategoryLayout.setVerticalGroup(
+            dlgEditCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgEditCategoryLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel23)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 600));
 
-        jTabbedPane1.setMinimumSize(new java.awt.Dimension(0, 0));
+        wndMain.setMinimumSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout tabDashboardLayout = new javax.swing.GroupLayout(tabDashboard);
         tabDashboard.setLayout(tabDashboardLayout);
@@ -94,7 +337,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGap(0, 531, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Dashboard", tabDashboard);
+        wndMain.addTab("Dashboard", tabDashboard);
 
         tblTransactions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,10 +351,23 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         tblTransactions.setMinimumSize(new java.awt.Dimension(0, 0));
+        tblTransactions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTransactionsMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblTransactionsMouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblTransactions);
 
         btnAddTransaction.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
         btnAddTransaction.setText("New Transaction");
+        btnAddTransaction.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddTransactionMouseClicked(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Filters");
@@ -211,7 +467,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        jTabbedPane1.addTab("Transactions", tabTransactions);
+        wndMain.addTab("Transactions", tabTransactions);
 
         tblProducts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -229,6 +485,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         btnAddProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
         btnAddProduct.setText("New Product");
+        btnAddProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddProductMouseClicked(evt);
+            }
+        });
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Filters");
@@ -296,7 +557,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        jTabbedPane1.addTab("Products", tabProducts);
+        wndMain.addTab("Products", tabProducts);
 
         tblSuppliers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -314,6 +575,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         btnAddSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
         btnAddSupplier.setText("New Supplier");
+        btnAddSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddSupplierMouseClicked(evt);
+            }
+        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Filters");
@@ -381,7 +647,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        jTabbedPane1.addTab("Suppliers", tabSuppliers);
+        wndMain.addTab("Suppliers", tabSuppliers);
 
         tblCategories.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -399,6 +665,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
         btnAddCategory.setText("New Category");
+        btnAddCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddCategoryMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabCategoriesLayout = new javax.swing.GroupLayout(tabCategories);
         tabCategories.setLayout(tabCategoriesLayout);
@@ -423,7 +694,7 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
         );
 
-        jTabbedPane1.addTab("Categories", tabCategories);
+        wndMain.addTab("Categories", tabCategories);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -431,17 +702,60 @@ public class MainScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(wndMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(wndMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddTransactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddTransactionMouseClicked
+        dlgAddTransaction.setVisible(true);
+    }//GEN-LAST:event_btnAddTransactionMouseClicked
+
+    private void btnAddProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddProductMouseClicked
+        dlgAddProduct.setVisible(true);
+    }//GEN-LAST:event_btnAddProductMouseClicked
+
+    private void btnAddSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddSupplierMouseClicked
+        dlgAddSupplier.setVisible(true);
+    }//GEN-LAST:event_btnAddSupplierMouseClicked
+
+    private void btnAddCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddCategoryMouseClicked
+        dlgAddCategory.setVisible(true);
+    }//GEN-LAST:event_btnAddCategoryMouseClicked
+
+    private void tblTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseClicked
+
+    }//GEN-LAST:event_tblTransactionsMouseClicked
+
+    private void tblTransactionsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseReleased
+
+    }//GEN-LAST:event_tblTransactionsMouseReleased
+
+    private void showPopup(java.awt.event.MouseEvent evt, javax.swing.JTable tbl, javax.swing.JDialog editDialog, Runnable deleteFunc) {
+        if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+            int row = tbl.rowAtPoint( evt.getPoint());
+            int column = tbl.columnAtPoint(evt.getPoint());
+            
+            if (!tbl.isRowSelected(row))
+               tbl.changeSelection(row, column, false, false);
+
+            JPopupMenu popup = new JPopupMenu();
+            JMenuItem editItem = new JMenuItem("Edit");
+            editItem.addActionListener(e -> editDialog.setVisible(true));
+            JMenuItem deleteItem = new JMenuItem("Delete");
+            deleteItem.addActionListener(e -> deleteFunc.run());
+            popup.add(editItem);
+            popup.add(deleteItem);
+            popup.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -493,14 +807,30 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbTransactionSupplier;
     private javax.swing.JComboBox<String> cmbTransactionType;
     private javax.swing.JComboBox<String> cmbTransactionYear;
+    private javax.swing.JDialog dlgAddCategory;
+    private javax.swing.JDialog dlgAddProduct;
+    private javax.swing.JDialog dlgAddSupplier;
+    private javax.swing.JDialog dlgAddTransaction;
+    private javax.swing.JDialog dlgEditCategory;
+    private javax.swing.JDialog dlgEditProduct;
+    private javax.swing.JDialog dlgEditSupplier;
+    private javax.swing.JDialog dlgEditTransaction;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -508,6 +838,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -518,7 +849,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel tabCategories;
     private javax.swing.JPanel tabDashboard;
     private javax.swing.JPanel tabProducts;
@@ -530,5 +860,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTable tblTransactions;
     private javax.swing.JTextField txtProductName;
     private javax.swing.JTextField txtSupplierName;
+    private javax.swing.JTabbedPane wndMain;
     // End of variables declaration//GEN-END:variables
 }
