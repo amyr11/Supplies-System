@@ -747,7 +747,7 @@ public class MainScreen extends javax.swing.JFrame {
                tbl.changeSelection(row, column, false, false);
 
             JPopupMenu popup = new JPopupMenu();
-            JMenuItem editItem = new JMenuItem("Edit");
+            JMenuItem editItem = new JMenuItem("Edit...");
             editItem.addActionListener(e -> editDialog.setVisible(true));
             JMenuItem deleteItem = new JMenuItem("Delete");
             deleteItem.addActionListener(e -> deleteFunc.run());
