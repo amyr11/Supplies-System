@@ -8,7 +8,7 @@ CREATE TABLE Suppliers (
     email VARCHAR(50) NOT NULL,
     contact_number VARCHAR(20) NOT NULL,
     product_lines VARCHAR(50) NOT NULL,
-    active VARCHAR(1) NOT NULL DEFAULT 'y',
+    active VARCHAR(3) NOT NULL DEFAULT 'yes',
     CONSTRAINT supplier_name_pk PRIMARY KEY(supplier_name),
     CONSTRAINT product_lines_fk FOREIGN KEY(product_lines) REFERENCES Product_Categories(category_name)
 );
@@ -17,7 +17,7 @@ CREATE TABLE Products (
     product_name VARCHAR(50) NOT NULL,
     product_description VARCHAR(50) NOT NULL,
     category VARCHAR(50) NOT NULL,
-    active VARCHAR(1) NOT NULL DEFAULT 'y',
+    active VARCHAR(3) NOT NULL DEFAULT 'yes',
     CONSTRAINT product_name_pk PRIMARY KEY(product_name),
     CONSTRAINT category_fk FOREIGN KEY(category) REFERENCES Product_Categories(category_name)
 );
@@ -68,16 +68,16 @@ INSERT INTO Suppliers (
                 product_lines, 
                 active
             )
-VALUES ('Acme Electronics', 'info@acme-electronics.com', '555-555-1212', 'Electronics', 'y'),
-       ('Furnish Co.', 'contact@furnish-co.com', '555-555-1213', 'Furniture', 'y'),
-       ('Fashion Inc.', 'fashion@fashion-inc.com', '555-555-1214', 'Clothing', 'y'),
-       ('Outdoor Adventures', 'info@outdoor-adventures.com', '555-555-1215', 'Outdoor gear', 'y'),
-       ('Toy World', 'contact@toy-world.com', '555-555-1216', 'Toys', 'y'),
-       ('Sportswear Co.', 'sportswear@sportswear-co.com', '555-555-1217', 'Sports equipment', 'y'),
-       ('Beauty Depot', 'beauty@beauty-depot.com', '555-555-1218', 'Beauty products', 'y'),
-       ('AutoWorks', 'autoworks@autoworks.com', '555-555-1219', 'Automotive parts', 'y'),
-       ('Home Essentials', 'home@home-essentials.com', '555-555-1220', 'Home appliances', 'y'),
-       ('Office Supply Co.', 'office@office-supply-co.com', '555-555-1221', 'Office supplies', 'y');
+VALUES ('Acme Electronics', 'info@acme-electronics.com', '555-555-1212', 'Electronics', 'yes'),
+       ('Furnish Co.', 'contact@furnish-co.com', '555-555-1213', 'Furniture', 'yes'),
+       ('Fashion Inc.', 'fashion@fashion-inc.com', '555-555-1214', 'Clothing', 'yes'),
+       ('Outdoor Adventures', 'info@outdoor-adventures.com', '555-555-1215', 'Outdoor gear', 'yes'),
+       ('Toy World', 'contact@toy-world.com', '555-555-1216', 'Toys', 'yes'),
+       ('Sportswear Co.', 'sportswear@sportswear-co.com', '555-555-1217', 'Sports equipment', 'yes'),
+       ('Beauty Depot', 'beauty@beauty-depot.com', '555-555-1218', 'Beauty products', 'yes'),
+       ('AutoWorks', 'autoworks@autoworks.com', '555-555-1219', 'Automotive parts', 'yes'),
+       ('Home Essentials', 'home@home-essentials.com', '555-555-1220', 'Home appliances', 'yes'),
+       ('Office Supply Co.', 'office@office-supply-co.com', '555-555-1221', 'Office supplies', 'yes');
 
 INSERT INTO Products (
                 product_name, 
@@ -85,16 +85,16 @@ INSERT INTO Products (
                 category, 
                 active
             )
-VALUES ('50-in TV', '50-inch 4K TV', 'Electronics', 'y'),
-       ('Sofa', 'Leather couch', 'Furniture', 'y'),
-       ('Jeans', 'Skinny fit', 'Clothing', 'y'),
-       ('Tent', '4-person camping tent', 'Outdoor gear', 'y'),
-       ('Action figure', 'Batman collectible', 'Toys', 'y'),
-       ('Basketball', 'High-quality basket ball', 'Sports equipment', 'y'),
-       ('Perfume', 'Luxury brand', 'Beauty products', 'y'),
-       ('Car battery', 'Lead-acid battery', 'Automotive parts', 'y'),
-       ('Refrigerator', 'Top-mount fridge', 'Home appliances', 'y'),
-       ('Printer', 'Inkjet printer', 'Office supplies', 'y');
+VALUES ('50-in TV', '50-inch 4K TV', 'Electronics', 'yes'),
+       ('Sofa', 'Leather couch', 'Furniture', 'yes'),
+       ('Jeans', 'Skinny fit', 'Clothing', 'yes'),
+       ('Tent', '4-person camping tent', 'Outdoor gear', 'yes'),
+       ('Action figure', 'Batman collectible', 'Toys', 'yes'),
+       ('Basketball', 'High-quality basket ball', 'Sports equipment', 'yes'),
+       ('Perfume', 'Luxury brand', 'Beauty products', 'yes'),
+       ('Car battery', 'Lead-acid battery', 'Automotive parts', 'yes'),
+       ('Refrigerator', 'Top-mount fridge', 'Home appliances', 'yes'),
+       ('Printer', 'Inkjet printer', 'Office supplies', 'yes');
 
 INSERT INTO Transactions (
                 supplier_name, 

@@ -1,23 +1,46 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package screens;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import net.proteanit.sql.DbUtils;
+import java.sql.*;
+import finalproject_group1.ConnectDB;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.RowFilter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author amyrfrancisco
  */
 public class MainScreen extends javax.swing.JFrame {
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    
+    TableRowSorter<TableModel> transactionsSorter;
+    TableRowSorter<TableModel> productsSorter;
+    TableRowSorter<TableModel> suppliersSorter;
+    
+    
+    @FunctionalInterface
+    interface EditRecord {
+        void edit(String pk);
+    }
 
     /**
      * Creates new form Mainscreen
      */
     public MainScreen() {
         initComponents();
+        
+        initTransactionsScreen();
+        initProductsScreen();
+        initSuppliersScreen();
+        initCategoriesScreen();
     }
 
     /**
@@ -117,14 +140,6 @@ public class MainScreen extends javax.swing.JFrame {
         txtUpdateCategoryName = new javax.swing.JTextField();
         btnUpdateCategory = new javax.swing.JButton();
         jLabel65 = new javax.swing.JLabel();
-        dlgSettings = new javax.swing.JDialog();
-        jLabel66 = new javax.swing.JLabel();
-        txtUpdateCategoryName1 = new javax.swing.JTextField();
-        jLabel67 = new javax.swing.JLabel();
-        jLabel68 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
         wndMain = new javax.swing.JTabbedPane();
         tabDashboard = new javax.swing.JPanel();
         tabTransactions = new javax.swing.JPanel();
@@ -138,14 +153,12 @@ public class MainScreen extends javax.swing.JFrame {
         cmbTransactionSupplier = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cmbTransactionProduct = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        cmbTransactionMonth = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        cmbTransactionYear = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         cmbTransactionType = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         cmbTransactionStatus = new javax.swing.JComboBox<>();
+        txtTransactionDate = new javax.swing.JTextField();
         tabProducts = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblProducts = new javax.swing.JTable();
@@ -178,16 +191,15 @@ public class MainScreen extends javax.swing.JFrame {
         btnAddCategory = new javax.swing.JButton();
         tabSettings = new javax.swing.JPanel();
         jLabel69 = new javax.swing.JLabel();
-        txtUpdateCategoryName2 = new javax.swing.JTextField();
+        txtSettingsUsername = new javax.swing.JTextField();
         jLabel70 = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
-        jPasswordField4 = new javax.swing.JPasswordField();
+        pwdSettingsOldPassword = new javax.swing.JPasswordField();
+        pwdSettingsNewPassword = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
 
         dlgAddTransaction.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgAddTransaction.setTitle("Add Transaction");
-        dlgAddTransaction.setAlwaysOnTop(true);
         dlgAddTransaction.setBounds(new java.awt.Rectangle(50, 50, 360, 520));
         dlgAddTransaction.setLocation(new java.awt.Point(50, 50));
         dlgAddTransaction.setMinimumSize(null);
@@ -223,47 +235,43 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel31.setText("Date (YYYY-MM-DD)");
 
         btnAddNewTransaction.setText("Add");
+        btnAddNewTransaction.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewTransactionMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout dlgAddTransactionLayout = new javax.swing.GroupLayout(dlgAddTransaction.getContentPane());
         dlgAddTransaction.getContentPane().setLayout(dlgAddTransactionLayout);
         dlgAddTransactionLayout.setHorizontalGroup(
             dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgAddTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbNewTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbNewTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
             .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
             .addGroup(dlgAddTransactionLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNewTransactionDate)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgAddTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbNewTransactionSupplier, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbNewTransactionProduct, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(dlgAddTransactionLayout.createSequentialGroup()
+                        .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbNewTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(dlgAddTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbNewTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtNewTransactionDate)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbNewTransactionSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbNewTransactionProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgAddTransactionLayout.createSequentialGroup()
                         .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(dlgAddTransactionLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgAddTransactionLayout.createSequentialGroup()
                         .addComponent(txtNewTransactionQuantity)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNewTransactionCost)))
-                .addGap(20, 20, 20))
-            .addGroup(dlgAddTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnAddNewTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNewTransactionCost))
+                    .addComponent(btnAddNewTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         dlgAddTransactionLayout.setVerticalGroup(
@@ -308,7 +316,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgEditTransaction.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgEditTransaction.setTitle("Update Transaction");
-        dlgEditTransaction.setAlwaysOnTop(true);
         dlgEditTransaction.setBounds(new java.awt.Rectangle(50, 50, 360, 520));
         dlgEditTransaction.setLocation(new java.awt.Point(50, 50));
         dlgEditTransaction.setMinimumSize(null);
@@ -344,47 +351,43 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel39.setText("Date (YYYY-MM-DD)");
 
         btnUpdateTransaction.setText("Update");
+        btnUpdateTransaction.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateTransactionMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout dlgEditTransactionLayout = new javax.swing.GroupLayout(dlgEditTransaction.getContentPane());
         dlgEditTransaction.getContentPane().setLayout(dlgEditTransactionLayout);
         dlgEditTransactionLayout.setHorizontalGroup(
             dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgEditTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbUpdateTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbUpdateTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
             .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
             .addGroup(dlgEditTransactionLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUpdateTransactionDate)
-                    .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgEditTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbUpdateTransactionSupplier, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbUpdateTransactionProduct, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(dlgEditTransactionLayout.createSequentialGroup()
+                        .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbUpdateTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(dlgEditTransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbUpdateTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtUpdateTransactionDate)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbUpdateTransactionSupplier, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbUpdateTransactionProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgEditTransactionLayout.createSequentialGroup()
                         .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(dlgEditTransactionLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgEditTransactionLayout.createSequentialGroup()
                         .addComponent(txtUpdateTransactionQuantity)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUpdateTransactionCost)))
-                .addGap(20, 20, 20))
-            .addGroup(dlgEditTransactionLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnUpdateTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtUpdateTransactionCost))
+                    .addComponent(btnUpdateTransaction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         dlgEditTransactionLayout.setVerticalGroup(
@@ -429,7 +432,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgAddProduct.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgAddProduct.setTitle("Add Product");
-        dlgAddProduct.setAlwaysOnTop(true);
         dlgAddProduct.setBounds(new java.awt.Rectangle(50, 50, 360, 420));
         dlgAddProduct.setLocation(new java.awt.Point(50, 50));
         dlgAddProduct.setMinimumSize(null);
@@ -443,6 +445,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel41.setText("Description");
 
         btnAddNewProduct.setText("Add");
+        btnAddNewProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewProductMouseClicked(evt);
+            }
+        });
 
         jLabel43.setText("Category");
 
@@ -462,24 +469,15 @@ public class MainScreen extends javax.swing.JFrame {
             dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel45, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
             .addGroup(dlgAddProductLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dlgAddProductLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(dlgAddProductLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNewProductName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(dlgAddProductLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddNewProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbNewProductCategory, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(dlgAddProductLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1)))
+                    .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNewProductName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddNewProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbNewProductCategory, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addGap(20, 20, 20))
         );
         dlgAddProductLayout.setVerticalGroup(
@@ -506,10 +504,9 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgEditProduct.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgEditProduct.setTitle("Update Product");
-        dlgEditProduct.setAlwaysOnTop(true);
         dlgEditProduct.setBounds(new java.awt.Rectangle(50, 50, 360, 480));
         dlgEditProduct.setLocation(new java.awt.Point(50, 50));
-        dlgEditProduct.setMinimumSize(new java.awt.Dimension(450, 500));
+        dlgEditProduct.setMinimumSize(null);
         dlgEditProduct.setModal(true);
         dlgEditProduct.setName(""); // NOI18N
         dlgEditProduct.setResizable(false);
@@ -522,6 +519,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel42.setText("Description");
 
         btnUpdateProduct.setText("Update");
+        btnUpdateProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateProductMouseClicked(evt);
+            }
+        });
 
         jLabel44.setText("Category");
 
@@ -586,7 +588,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgAddSupplier.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgAddSupplier.setTitle("Add Supplier");
-        dlgAddSupplier.setAlwaysOnTop(true);
         dlgAddSupplier.setBounds(new java.awt.Rectangle(50, 50, 360, 450));
         dlgAddSupplier.setLocation(new java.awt.Point(50, 50));
         dlgAddSupplier.setMinimumSize(null);
@@ -600,6 +601,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel49.setText("New Supplier");
 
         btnAddNewSupplier.setText("Add");
+        btnAddNewSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewSupplierMouseClicked(evt);
+            }
+        });
 
         jLabel51.setText("Product lines");
 
@@ -617,22 +623,17 @@ public class MainScreen extends javax.swing.JFrame {
             dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
             .addGroup(dlgAddSupplierLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dlgAddSupplierLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNewSupplierEmail, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel53, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNewSupplierName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(dlgAddSupplierLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgAddSupplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddNewSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNewSupplierContactNumber, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel54, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbNewSupplierProductLines, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(txtNewSupplierEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel53, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNewSupplierName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddNewSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNewSupplierContactNumber, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel54, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel51, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbNewSupplierProductLines, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         dlgAddSupplierLayout.setVerticalGroup(
@@ -663,7 +664,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgEditSupplier.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgEditSupplier.setTitle("Update Supplier");
-        dlgEditSupplier.setAlwaysOnTop(true);
         dlgEditSupplier.setBounds(new java.awt.Rectangle(50, 50, 360, 520));
         dlgEditSupplier.setLocation(new java.awt.Point(50, 50));
         dlgEditSupplier.setMinimumSize(null);
@@ -681,6 +681,11 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel56.setText("Contact number");
 
         btnUpdateSupplier.setText("Update");
+        btnUpdateSupplier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateSupplierMouseClicked(evt);
+            }
+        });
 
         jLabel57.setText("Product lines");
 
@@ -749,7 +754,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgAddCategory.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgAddCategory.setTitle("Add Category");
-        dlgAddCategory.setAlwaysOnTop(true);
         dlgAddCategory.setBounds(new java.awt.Rectangle(50, 50, 360, 210));
         dlgAddCategory.setLocation(new java.awt.Point(50, 50));
         dlgAddCategory.setMinimumSize(null);
@@ -759,6 +763,11 @@ public class MainScreen extends javax.swing.JFrame {
         dlgAddCategory.setLocationRelativeTo(null);
 
         btnAddNewCategory.setText("Add");
+        btnAddNewCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAddNewCategoryMouseClicked(evt);
+            }
+        });
 
         jLabel64.setText("Category name");
 
@@ -767,15 +776,11 @@ public class MainScreen extends javax.swing.JFrame {
         dlgAddCategoryLayout.setHorizontalGroup(
             dlgAddCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dlgAddCategoryLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(dlgAddCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dlgAddCategoryLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgAddCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNewCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel64, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))
-                    .addGroup(dlgAddCategoryLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnAddNewCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtNewCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel64, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(btnAddNewCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         dlgAddCategoryLayout.setVerticalGroup(
@@ -792,16 +797,20 @@ public class MainScreen extends javax.swing.JFrame {
 
         dlgEditCategory.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dlgEditCategory.setTitle("Update Category");
-        dlgEditCategory.setAlwaysOnTop(true);
         dlgEditCategory.setBounds(new java.awt.Rectangle(50, 50, 360, 210));
         dlgEditCategory.setLocation(new java.awt.Point(50, 50));
         dlgEditCategory.setMinimumSize(null);
         dlgEditCategory.setModal(true);
         dlgEditCategory.setName(""); // NOI18N
         dlgEditCategory.setResizable(false);
-        dlgAddCategory.setLocationRelativeTo(null);
+        dlgEditCategory.setLocationRelativeTo(null);
 
         btnUpdateCategory.setText("Update");
+        btnUpdateCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateCategoryMouseClicked(evt);
+            }
+        });
 
         jLabel65.setText("Category name");
 
@@ -810,15 +819,11 @@ public class MainScreen extends javax.swing.JFrame {
         dlgEditCategoryLayout.setHorizontalGroup(
             dlgEditCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dlgEditCategoryLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(dlgEditCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dlgEditCategoryLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(dlgEditCategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUpdateCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel65, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)))
-                    .addGroup(dlgEditCategoryLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnUpdateCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtUpdateCategoryName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel65, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(btnUpdateCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
         dlgEditCategoryLayout.setVerticalGroup(
@@ -831,55 +836,6 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(btnUpdateCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
-        );
-
-        dlgSettings.setMinimumSize(null);
-        dlgSettings.setSize(new java.awt.Dimension(400, 300));
-
-        jLabel66.setText("Username");
-
-        jLabel67.setText("Old password");
-
-        jLabel68.setText("New password");
-
-        jButton1.setText("Update admin account");
-
-        javax.swing.GroupLayout dlgSettingsLayout = new javax.swing.GroupLayout(dlgSettings.getContentPane());
-        dlgSettings.getContentPane().setLayout(dlgSettingsLayout);
-        dlgSettingsLayout.setHorizontalGroup(
-            dlgSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgSettingsLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(dlgSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUpdateCategoryName1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel66, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                    .addComponent(jLabel67, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                    .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jPasswordField2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dlgSettingsLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addGap(20, 20, 20))
-        );
-        dlgSettingsLayout.setVerticalGroup(
-            dlgSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgSettingsLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel66)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUpdateCategoryName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel67)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel68)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -916,9 +872,6 @@ public class MainScreen extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblTransactionsMouseClicked(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblTransactionsMouseReleased(evt);
-            }
         });
         jScrollPane2.setViewportView(tblTransactions);
 
@@ -935,27 +888,52 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel2.setText("Supplier");
 
-        cmbTransactionSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTransactionSupplier.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        cmbTransactionSupplier.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTransactionSupplierItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Product");
 
-        cmbTransactionProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTransactionProduct.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        cmbTransactionProduct.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTransactionProductItemStateChanged(evt);
+            }
+        });
+        cmbTransactionProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTransactionProductActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("Month");
-
-        cmbTransactionMonth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel5.setText("Year");
-
-        cmbTransactionYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel5.setText("Date");
 
         jLabel6.setText("Type");
 
-        cmbTransactionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTransactionType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Purchase", "Sale" }));
+        cmbTransactionType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTransactionTypeActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Status");
 
-        cmbTransactionStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTransactionStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Delivered", "Pending", "Cancelled" }));
+        cmbTransactionStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTransactionStatusActionPerformed(evt);
+            }
+        });
+
+        txtTransactionDate.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTransactionDateCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabTransactionsLayout = new javax.swing.GroupLayout(tabTransactions);
         tabTransactions.setLayout(tabTransactionsLayout);
@@ -975,14 +953,12 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(cmbTransactionSupplier, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbTransactionProduct, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbTransactionMonth, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbTransactionYear, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmbTransactionType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmbTransactionStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTransactionDate))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
@@ -1016,13 +992,9 @@ public class MainScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbTransactionProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTransactionMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbTransactionYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTransactionDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
@@ -1042,6 +1014,11 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         tblProducts.setMinimumSize(new java.awt.Dimension(0, 0));
+        tblProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductsMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblProducts);
 
         btnAddProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
@@ -1057,13 +1034,29 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel13.setText("Category");
 
-        cmbProductCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProductCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        cmbProductCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductCategoryActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Active");
 
-        cmbProductActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbProductActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
+        cmbProductActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbProductActiveActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Product name");
+
+        txtProductName.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtProductNameCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabProductsLayout = new javax.swing.GroupLayout(tabProducts);
         tabProducts.setLayout(tabProductsLayout);
@@ -1132,6 +1125,11 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         tblSuppliers.setMinimumSize(new java.awt.Dimension(0, 0));
+        tblSuppliers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSuppliersMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblSuppliers);
 
         btnAddSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
@@ -1147,13 +1145,29 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel16.setText("Product lines");
 
-        cmbSupplierProductLine.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSupplierProductLine.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        cmbSupplierProductLine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSupplierProductLineActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Active");
 
-        cmbSupplierActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSupplierActive.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Yes", "No" }));
+        cmbSupplierActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSupplierActiveActionPerformed(evt);
+            }
+        });
 
         jLabel18.setText("Supplier name");
+
+        txtSupplierName.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSupplierNameCaretUpdate(evt);
+            }
+        });
 
         javax.swing.GroupLayout tabSuppliersLayout = new javax.swing.GroupLayout(tabSuppliers);
         tabSuppliers.setLayout(tabSuppliersLayout);
@@ -1222,6 +1236,11 @@ public class MainScreen extends javax.swing.JFrame {
             }
         ));
         tblCategories.setMinimumSize(new java.awt.Dimension(0, 0));
+        tblCategories.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCategoriesMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tblCategories);
 
         btnAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icons/add.png"))); // NOI18N
@@ -1272,12 +1291,12 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(tabSettingsLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(tabSettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUpdateCategoryName2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSettingsUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel69, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addComponent(jLabel70, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addComponent(jLabel71, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
-                    .addComponent(jPasswordField3)
-                    .addComponent(jPasswordField4)
+                    .addComponent(pwdSettingsOldPassword)
+                    .addComponent(pwdSettingsNewPassword)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabSettingsLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)))
@@ -1289,15 +1308,15 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel69)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUpdateCategoryName2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSettingsUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel70)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwdSettingsOldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel71)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pwdSettingsNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addContainerGap(298, Short.MAX_VALUE))
@@ -1340,33 +1359,439 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddCategoryMouseClicked
 
     private void tblTransactionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseClicked
-
+        showPopup(evt, tblTransactions, (pk) -> showEditTransaction(pk), (pk) -> deleteTransaction(pk));
     }//GEN-LAST:event_tblTransactionsMouseClicked
+        
+    private void initTransactionsScreen() {       
+        populateTable(tblTransactions, "SELECT * FROM transactions");
+        
+        populateComboBox(cmbTransactionSupplier, "SELECT supplier_name FROM suppliers");
+        populateComboBox(cmbTransactionProduct, "SELECT product_name FROM products");
+        
+        transactionsSorter = new TableRowSorter<>(tblTransactions.getModel());
+        tblTransactions.setRowSorter(transactionsSorter);
+    }
+    
+    private void filterTransactionsTable() {
+        String transactionType = cmbTransactionType.getSelectedItem().toString();
+        String transactionStatus = cmbTransactionStatus.getSelectedItem().toString();
+        String transactionSupplier = cmbTransactionSupplier.getSelectedItem().toString();        
+        String transactionProduct = cmbTransactionProduct.getSelectedItem().toString();        
+        String transactionDate = txtTransactionDate.getText();
 
-    private void tblTransactionsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTransactionsMouseReleased
+        String[] regex = {transactionType, transactionStatus, transactionSupplier, transactionProduct, transactionDate};
+        int[] indices = {6, 7, 1, 2, 5};
+        
+        filterTable(tblTransactions, transactionsSorter, regex, indices);
+    }
+    
+    private void addTransaction() {
+        System.out.println("Add transaction"); // Remove this
+        
+        // TODO: Add transaction
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void showEditTransaction(String pk) {        
+        System.out.println("Edit transaction (" + pk + ")"); // Remove this
+        dlgEditTransaction.setVisible(true);
+        
+        // TODO: Show and populate the edit transaction screen
+        // Start code here...            
+        
+        // End code here...
+    }
+    
+    private void updateTransaction(String pk) {        
+        System.out.println("Update transaction (" + pk + ")"); // Remove this
+        
+        // TODO: Update transaction
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void deleteTransaction(String pk) {
+        System.out.println("Delete transaction (" + pk + ")"); // Remove this
+        
+        // TODO: Delete transaction
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void tblProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductsMouseClicked
+        showPopup(evt, tblProducts, (pk) -> showEditProduct(pk), (pk) -> deleteProduct(pk));
+    }//GEN-LAST:event_tblProductsMouseClicked
+    
+    private void initProductsScreen() {       
+        populateTable(tblProducts, "SELECT * FROM products");
+        
+        populateComboBox(cmbProductCategory, "SELECT category_name FROM product_categories");
+        
+        productsSorter = new TableRowSorter<>(tblProducts.getModel());
+        tblProducts.setRowSorter(productsSorter);
+    }
+    
+    private void filterProductsTable() {
+        String productName = txtProductName.getText();
+        String productCategory = cmbProductCategory.getSelectedItem().toString();
+        String productActive = cmbProductActive.getSelectedItem().toString();
 
-    }//GEN-LAST:event_tblTransactionsMouseReleased
+        String[] regex = {productName, productCategory, productActive};
+        int[] indices = {0, 2, 3};
+        
+        filterTable(tblProducts, productsSorter, regex, indices);
+    }
+    
+    private void addProduct() {
+        System.out.println("Add product"); // Remove this
+        
+        // TODO: Add product
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void showEditProduct(String pk) {        
+        System.out.println("Edit product (" + pk + ")"); // Remove this
+        dlgEditProduct.setVisible(true);
+        
+        // TODO: Show and populate the edit product screen
+        // Start code here...            
+        
+        // End code here...
+    }
+    
+    private void updateProduct(String pk) {
+        System.out.println("Update product (" + pk + ")"); // Remove this
+        
+        // TODO: Update product
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void deleteProduct(String pk) {
+        System.out.println("Delete product (" + pk + ")"); // Remove this
+        
+        // TODO: Delete product
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void tblSuppliersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSuppliersMouseClicked
+        showPopup(evt, tblSuppliers, (pk) -> showEditSupplier(pk), (pk) -> deleteSupplier(pk));
+    }//GEN-LAST:event_tblSuppliersMouseClicked
 
-    private void showPopup(java.awt.event.MouseEvent evt, javax.swing.JTable tbl, javax.swing.JDialog editDialog, Runnable deleteFunc) {
+    private void initSuppliersScreen() {       
+        populateTable(tblSuppliers, "SELECT * FROM suppliers");
+        
+        populateComboBox(cmbSupplierProductLine, "SELECT category_name FROM product_categories");
+        
+        suppliersSorter = new TableRowSorter<>(tblSuppliers.getModel());
+        tblSuppliers.setRowSorter(suppliersSorter);
+    }
+    
+    private void filterSuppliersTable() {
+        String supplierName = txtSupplierName.getText();
+        String supplierProductLine = cmbSupplierProductLine.getSelectedItem().toString();
+        String supplierActive = cmbSupplierActive.getSelectedItem().toString();
+
+        String[] regex = {supplierName, supplierProductLine, supplierActive};
+        int[] indices = {0, 3, 4};
+        
+        filterTable(tblSuppliers, suppliersSorter, regex, indices);
+    }
+    
+    private void addSupplier() {
+        System.out.println("Add supplier"); // Remove this
+        
+        // TODO: Add supplier
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void showEditSupplier(String pk) {        
+        System.out.println("Edit supplier (" + pk + ")"); // Remove this
+        dlgEditSupplier.setVisible(true);
+        
+        // TODO: Show and populate the edit supplier screen
+        // Start code here...            
+        
+        // End code here...
+    }
+    
+    private void updateSupplier(String pk) {
+        System.out.println("Update supplier (" + pk + ")"); // Remove this
+        
+        // TODO: Update supplier
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void deleteSupplier(String pk) {
+        System.out.println("Delete supplier (" + pk + ")"); // Remove this
+        
+        // TODO: Delete supplier
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void tblCategoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriesMouseClicked
+        showPopup(evt, tblCategories, (pk) -> showEditCategory(pk), (pk) -> deleteCategory(pk));
+    }//GEN-LAST:event_tblCategoriesMouseClicked
+
+    private void btnUpdateTransactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateTransactionMouseClicked
+        updateTransaction(getPrimaryKeySelected(tblTransactions));
+    }//GEN-LAST:event_btnUpdateTransactionMouseClicked
+
+    private void btnUpdateProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateProductMouseClicked
+        updateProduct(getPrimaryKeySelected(tblProducts));
+    }//GEN-LAST:event_btnUpdateProductMouseClicked
+
+    private void btnUpdateSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateSupplierMouseClicked
+        updateSupplier(getPrimaryKeySelected(tblSuppliers));
+    }//GEN-LAST:event_btnUpdateSupplierMouseClicked
+
+    private void btnUpdateCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateCategoryMouseClicked
+        updateCategory(getPrimaryKeySelected(tblCategories));
+    }//GEN-LAST:event_btnUpdateCategoryMouseClicked
+
+    private void btnAddNewTransactionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewTransactionMouseClicked
+        addTransaction();
+    }//GEN-LAST:event_btnAddNewTransactionMouseClicked
+
+    private void txtTransactionDateCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTransactionDateCaretUpdate
+        filterTransactionsTable();
+    }//GEN-LAST:event_txtTransactionDateCaretUpdate
+
+    private void cmbTransactionTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTransactionTypeActionPerformed
+        filterTransactionsTable();
+    }//GEN-LAST:event_cmbTransactionTypeActionPerformed
+
+    private void cmbTransactionStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTransactionStatusActionPerformed
+        filterTransactionsTable();
+    }//GEN-LAST:event_cmbTransactionStatusActionPerformed
+
+    private void cmbTransactionProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTransactionProductActionPerformed
+        filterTransactionsTable();
+    }//GEN-LAST:event_cmbTransactionProductActionPerformed
+
+    private void cmbTransactionSupplierItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTransactionSupplierItemStateChanged
+        filterTransactionsTable();
+    }//GEN-LAST:event_cmbTransactionSupplierItemStateChanged
+
+    private void cmbTransactionProductItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTransactionProductItemStateChanged
+        filterTransactionsTable();
+    }//GEN-LAST:event_cmbTransactionProductItemStateChanged
+
+    private void txtProductNameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtProductNameCaretUpdate
+        filterProductsTable();
+    }//GEN-LAST:event_txtProductNameCaretUpdate
+
+    private void cmbProductCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductCategoryActionPerformed
+        filterProductsTable();
+    }//GEN-LAST:event_cmbProductCategoryActionPerformed
+
+    private void cmbProductActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductActiveActionPerformed
+        filterProductsTable();
+    }//GEN-LAST:event_cmbProductActiveActionPerformed
+
+    private void txtSupplierNameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSupplierNameCaretUpdate
+        filterSuppliersTable();
+    }//GEN-LAST:event_txtSupplierNameCaretUpdate
+
+    private void cmbSupplierProductLineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSupplierProductLineActionPerformed
+        filterSuppliersTable();
+    }//GEN-LAST:event_cmbSupplierProductLineActionPerformed
+
+    private void cmbSupplierActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSupplierActiveActionPerformed
+        filterSuppliersTable();
+    }//GEN-LAST:event_cmbSupplierActiveActionPerformed
+
+    private void btnAddNewProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewProductMouseClicked
+        addProduct();
+    }//GEN-LAST:event_btnAddNewProductMouseClicked
+
+    private void btnAddNewSupplierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewSupplierMouseClicked
+        addSupplier();
+    }//GEN-LAST:event_btnAddNewSupplierMouseClicked
+
+    private void btnAddNewCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddNewCategoryMouseClicked
+        addCategory();
+    }//GEN-LAST:event_btnAddNewCategoryMouseClicked
+    
+    private void initCategoriesScreen() {       
+        populateTable(tblCategories, "SELECT * FROM product_categories");
+    }
+    
+    private void addCategory() {
+        System.out.println("Add category"); // Remove this
+        
+        // TODO: Add category
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void showEditCategory(String pk) {        
+        System.out.println("Edit category (" + pk + ")"); // Remove this
+        dlgEditCategory.setVisible(true);
+        
+        // TODO: Show and populate the edit category screen
+        // Start code here...            
+        
+        // End code here...
+    }
+    
+    private void updateCategory(String pk) {
+        System.out.println("Update category (" + pk + ")"); // Remove this
+        
+        // TODO: Update category
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    private void deleteCategory(String pk) {
+        System.out.println("Delete category (" + pk + ")"); // Remove this
+        
+        // TODO: Delete category
+        // Start code here...
+        
+        // End code here...
+    }
+    
+    /**
+    * Populate a JComboBox given a SQL query.
+    *
+    * @param  query a SELECT query for the items in the combo box.
+    * @param  cmb   the JComboBox that should contain the items.
+    */
+    private void populateComboBox(javax.swing.JComboBox cmb, String query) {
+        try {
+            conn = ConnectDB.Connect();
+            ps = conn.prepareCall(query);
+            rs = ps.executeQuery();
+            
+            while (rs.next())
+                cmb.addItem(rs.getString(1));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    
+    /**
+    * Populate a JTable given a SQL query.
+    *
+    * @param  query a SELECT query for the rows in the table.
+    * @param  tbl   the JTable that should contain the rows.
+    */
+    private void populateTable(javax.swing.JTable tbl, String query) {
+        try {
+            conn = ConnectDB.Connect();
+            ps = conn.prepareCall(query);
+            rs = ps.executeQuery();
+            tbl.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    private void populateTable(javax.swing.JTable tbl, String query, String... params) {
+        try {
+            conn = ConnectDB.Connect();
+            ps = conn.prepareCall(query);
+            
+            for (int i = 1; i <= params.length; i++) {
+                ps.setString(i, params[i - 1]);
+            }
+            
+            rs = ps.executeQuery();
+            tbl.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+    }
+    
+    /**
+    * Filters a JTable given a set of regex and their column indices.
+    *
+    * @param  tbl           the JTable to filter.
+    * @param  sorter        the sorter for the JTable.
+    * @param  regex         an array of regex used for filtering a column.
+    * @param  indices       an array of column indices for each regex.
+    */
+    private void filterTable(javax.swing.JTable tbl, TableRowSorter<TableModel> sorter, String[] regex, int[] indices) {
+        assert regex.length == indices.length;
+        
+        List<RowFilter<TableModel, Object>> filters = new ArrayList<>();
+        for (int i = 0; i < regex.length; i++) {
+            String rgx = regex[i].toLowerCase();
+            if (!rgx.equals("all"))
+                filters.add(RowFilter.regexFilter("(?i)" + rgx, indices[i]));
+        }
+        
+        sorter.setRowFilter(RowFilter.andFilter(filters));
+        tbl.repaint();
+    }
+    
+    /**
+    * Shows the Edit or Delete popup.
+    *
+    * @param  evt           the mouse event that triggered the function.
+    * @param  tbl           the JTable that contains the rows.
+    * @param  editFunc      an anonymous function used to edit the record.
+    * @param  deleteFunc    an anonymous function used to delete the record.
+    */
+    private void showPopup(java.awt.event.MouseEvent evt, javax.swing.JTable tbl, EditRecord editFunc, EditRecord deleteFunc) {
         if (evt.getButton() == java.awt.event.MouseEvent.BUTTON3) {
             int row = tbl.rowAtPoint( evt.getPoint());
             int column = tbl.columnAtPoint(evt.getPoint());
             
             if (!tbl.isRowSelected(row))
+               tbl.clearSelection();
                tbl.changeSelection(row, column, false, false);
-
-            JPopupMenu popup = new JPopupMenu();
-            JMenuItem editItem = new JMenuItem("Edit...");
-            editItem.addActionListener(e -> editDialog.setVisible(true));
-            JMenuItem deleteItem = new JMenuItem("Delete");
-            deleteItem.addActionListener(e -> deleteFunc.run());
-            popup.add(editItem);
-            popup.add(deleteItem);
-            popup.show(evt.getComponent(), evt.getX(), evt.getY());
+            
+            // Only show popup if a primary key is found
+            try {
+                String primaryKey = tbl.getValueAt(row, 0).toString();
+                
+                JPopupMenu popup = new JPopupMenu();
+                JMenuItem editItem = new JMenuItem("Edit...");
+                editItem.addActionListener(e -> editFunc.edit(primaryKey));
+                JMenuItem deleteItem = new JMenuItem("Delete");
+                deleteItem.addActionListener(e -> deleteFunc.edit(primaryKey));
+                
+                popup.add(editItem);
+                popup.add(deleteItem);
+                popup.show(evt.getComponent(), evt.getX(), evt.getY());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Record has no primary key");
+            }
         }
     }
+    
     /**
-     * @param args the command line arguments
+    * Get the primary key of the selected row in a JTable.
+    *
+    * @param  tbl   the table where the row is selected.
+    */
+    private String getPrimaryKeySelected(javax.swing.JTable tbl) {
+        int row = tbl.getSelectedRow();
+        String primaryKey = tbl.getValueAt(row, 0).toString();
+        
+        return primaryKey;
+    }
+    
+    /**
+     * @param args  the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1424,12 +1849,10 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbProductCategory;
     private javax.swing.JComboBox<String> cmbSupplierActive;
     private javax.swing.JComboBox<String> cmbSupplierProductLine;
-    private javax.swing.JComboBox<String> cmbTransactionMonth;
     private javax.swing.JComboBox<String> cmbTransactionProduct;
     private javax.swing.JComboBox<String> cmbTransactionStatus;
     private javax.swing.JComboBox<String> cmbTransactionSupplier;
     private javax.swing.JComboBox<String> cmbTransactionType;
-    private javax.swing.JComboBox<String> cmbTransactionYear;
     private javax.swing.JComboBox<String> cmbUpdateProductActive;
     private javax.swing.JComboBox<String> cmbUpdateProductCategory;
     private javax.swing.JComboBox<String> cmbUpdateSupplierActive;
@@ -1446,8 +1869,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JDialog dlgEditProduct;
     private javax.swing.JDialog dlgEditSupplier;
     private javax.swing.JDialog dlgEditTransaction;
-    private javax.swing.JDialog dlgSettings;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -1474,7 +1895,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -1499,19 +1919,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel66;
-    private javax.swing.JLabel jLabel67;
-    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
-    private javax.swing.JPasswordField jPasswordField4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1524,6 +1937,8 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JPasswordField pwdSettingsNewPassword;
+    private javax.swing.JPasswordField pwdSettingsOldPassword;
     private javax.swing.JPanel tabCategories;
     private javax.swing.JPanel tabDashboard;
     private javax.swing.JPanel tabProducts;
@@ -1544,10 +1959,10 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JTextField txtNewTransactionDate;
     private javax.swing.JTextField txtNewTransactionQuantity;
     private javax.swing.JTextField txtProductName;
+    private javax.swing.JTextField txtSettingsUsername;
     private javax.swing.JTextField txtSupplierName;
+    private javax.swing.JTextField txtTransactionDate;
     private javax.swing.JTextField txtUpdateCategoryName;
-    private javax.swing.JTextField txtUpdateCategoryName1;
-    private javax.swing.JTextField txtUpdateCategoryName2;
     private javax.swing.JTextArea txtUpdateProductDescription;
     private javax.swing.JTextField txtUpdateProductName;
     private javax.swing.JTextField txtUpdateSupplierContactNumber;

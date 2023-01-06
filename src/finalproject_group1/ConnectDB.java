@@ -14,7 +14,7 @@ public class ConnectDB {
             Class.forName("org.apache.derby.jdbc.ClientDriver").getDeclaredConstructor().newInstance();
             String url = "jdbc:derby://localhost:1527/SuppliesDB;create=true";
             conn = DriverManager.getConnection(url,"dbadmin","dbadmin");
-            System.out.println("Connected.");
+//            System.out.println("Connected.");
             return conn;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
