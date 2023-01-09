@@ -1,6 +1,6 @@
 CREATE TABLE Product_Categories (
     category_name VARCHAR(50) NOT NULL,
-    CONSTRAINT category_name_pk PRIMARY KEY(category_name)
+    PRIMARY KEY(category_name)
 );
 
 CREATE TABLE Suppliers (
@@ -9,8 +9,7 @@ CREATE TABLE Suppliers (
     contact_number VARCHAR(20) NOT NULL,
     product_lines VARCHAR(50) NOT NULL,
     active VARCHAR(3) NOT NULL DEFAULT 'yes',
-    CONSTRAINT supplier_name_pk PRIMARY KEY(supplier_name),
-    CONSTRAINT product_lines_fk FOREIGN KEY(product_lines) REFERENCES Product_Categories(category_name)
+    PRIMARY KEY(supplier_name)
 );
 
 CREATE TABLE Products (
@@ -18,8 +17,7 @@ CREATE TABLE Products (
     product_description VARCHAR(50) NOT NULL,
     category VARCHAR(50) NOT NULL,
     active VARCHAR(3) NOT NULL DEFAULT 'yes',
-    CONSTRAINT product_name_pk PRIMARY KEY(product_name),
-    CONSTRAINT category_fk FOREIGN KEY(category) REFERENCES Product_Categories(category_name)
+    PRIMARY KEY(product_name)
 );
 
 CREATE TABLE Transactions (
@@ -33,9 +31,7 @@ CREATE TABLE Transactions (
     cost DECIMAL(10, 2) NOT NULL,
     transaction_date DATE NOT NULL,
     transaction_type VARCHAR(10),
-    status VARCHAR(10),
-    CONSTRAINT supplier_name_fk FOREIGN KEY(supplier_name) REFERENCES Suppliers(supplier_name),
-    CONSTRAINT product_name_fk FOREIGN KEY(product_name) REFERENCES Products(product_name)
+    status VARCHAR(10)
 );
 
 CREATE TABLE Admin_user (
